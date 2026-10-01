@@ -1,4 +1,7 @@
 [![Build Status](http://192.168.1.150:8080/job/instavote/job/worker-build/badge/icon)](http://192.168.1.150:8080/job/instavote/job/worker-build/)
+[![Build Status](http://192.168.1.150:8080/job/instavote/job/worker-test/badge/icon?subject=test)](http://192.168.1.150:8080/job/instavote/job/worker-test/)
+[![Build Status](http://192.168.1.150:8080/job/instavote/job/worker-package/badge/icon?subject=package)](http://192.168.1.150:8080/job/instavote/job/worker-package/)
+
 
 Example Voting App
 =========
