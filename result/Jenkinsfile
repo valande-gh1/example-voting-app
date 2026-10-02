@@ -12,9 +12,10 @@ pipeline {
                 changeset '**/result/**'
             }
             steps {
-                dir('result')
-                sh 'npm install'
-                sh 'npm ls'
+                dir('result') {
+                    sh 'npm install'
+                    sh 'npm ls'
+                }
             }
         }
 
@@ -23,10 +24,11 @@ pipeline {
                 changeset '**/result/**'
             }
             steps {
-                dir('result')
-                sh 'npm install'
-                sh 'npm ls'
-                sh 'npm test'
+                dir('result') {
+                    sh 'npm install'
+                    sh 'npm ls'
+                    sh 'npm test'
+                }
             }
         }
 
