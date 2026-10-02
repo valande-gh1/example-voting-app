@@ -1,8 +1,10 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'maven 3.9.16'
+    
+    agent {
+        docker {
+            image 'maven:3.9.8-sapmachine-21'
+            args '-v $HOME/.m2:/root/.m2'
+        }
     }
 
     stages {
@@ -34,7 +36,7 @@ pipeline {
                 changeset "**/worker/**"
             }
             steps {
-                echo 'Packaging worker app'
+                echo 'Packaging worker app into a jar file'
                 dir ('worker') {
                     sh 'mvn package -DskipTests'
                     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
@@ -45,7 +47,7 @@ pipeline {
 
     post {
         always {
-            echo 'Building multibranch pipeline for worker is completed..'
+            echo 'The job is complete.'
             slackSend (channel: "#ci-cd-jenkins", message: "Build Finished: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
         }
         failure{
