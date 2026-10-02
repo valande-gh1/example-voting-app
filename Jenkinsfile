@@ -31,6 +31,14 @@ pipeline {
       always{
           echo 'This pipeline is completed.'
       }
+      failure{
+	  slackSend (channel: "#ci-cd-jenkins", message: "Build Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+      }
+      
+      success{
+	  slackSend (channel: "#ci-cd-jenkins", message: "Build Success: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+      }
+      
     }
 }
 
