@@ -38,7 +38,7 @@ pipeline {
             agent any
             when {
                 branch 'master'
-                changeset "**/worker/**"
+                changeset "**/result/**"
             }
             steps{
                 echo 'Packaging result app with docker'

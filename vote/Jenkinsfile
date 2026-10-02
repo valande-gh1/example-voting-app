@@ -39,7 +39,7 @@ pipeline {
             agent any
             when {
                 branch 'master'
-                changeset "**/worker/**"
+                changeset "**/vote/**"
             }
             steps{
                 echo 'Packaging vote app with docker'
