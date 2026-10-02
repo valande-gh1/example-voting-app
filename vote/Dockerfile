@@ -18,8 +18,7 @@ CMD ["python", "app.py"]
 
 # Define the final stage that will bundle the application for production
 FROM base AS final
-# Copy our code from the current folder to the working directory
-inside the container
+# Copy our code from the current folder to the working directory inside the container
 COPY . .
 # Make port 80 available for links and/or publish
 EXPOSE 80
