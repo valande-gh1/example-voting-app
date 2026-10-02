@@ -13,10 +13,8 @@ pipeline {
             }
             steps {
                 echo 'Compiling result app..'
-                dir('result') {
                     sh 'npm install'
                     sh 'npm ls'
-                }
             }
         }
 
@@ -26,11 +24,9 @@ pipeline {
             }
             steps {
                 echo 'Running Unit Tests on result app..'
-                dir('result') {
                     sh 'npm install'
                     sh 'npm ls'
                     sh 'npm test'
-                }
             }
         }
 
