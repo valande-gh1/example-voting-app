@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven 3.9.16'
+    }
+
+    stages {
+        stage ("build") {
+            steps{
+                echo 'Compiling worker app'
+                dir ('worker') {
+                    sh 'mvn compile'
+                }
+            }
+        }
+        stage ("test") {
+            steps{
+                echo 'Running Unit Tests on worker app'
+                dir ('worker') {
+                    sh 'mvn clean test'
+                }
+            }
+        }
+        stage ("package") {
+            steps {
+                echo 'Packaging worker app'
+                dir ('worker') {
+                    sh 'mvn package -DskipTests'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Building multibranch pipeline for worker is completed..'
+            slackSend (channel: "#ci-cd-jenkins", message: "Build Finished: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+        }
+        failure{
+            slackSend (channel: "#ci-cd-jenkins", message: "Build Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+        }
+        
+        success{
+            slackSend (channel: "#ci-cd-jenkins", message: "Build Success: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+        }
+    }
+}
