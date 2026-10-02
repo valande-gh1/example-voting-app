@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage("build") {
+            when{
+                changeset '**/result/**'
+            }
+            steps {
+                sh 'npm install'
+                sh 'npm ls'
+            }
+        }
+
+        stage("test") {
+            when{
+                changeset '**/result/**'
+            }
+            steps {
+                sh 'npm install'
+                sh 'npm ls'
+                sh 'npm test'
+            }
+        }
+
+    }
+
+    post {
+
+        always {
+            echo 'Building multibranch pipeline for result is completed..'
+            slackSend (channel: "#ci-cd-jenkins", message: "Build Finished: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+        }
+        success {
+            slackSend (channel: "#ci-cd-jenkins", message: "Build Success: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+        }
+        failure {
+            slackSend (channel: "#ci-cd-jenkins", message: "Build Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
+        }
+        
+    }
+}
